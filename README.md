@@ -1,6 +1,14 @@
 # Symlink Creator
 Symlink Creator is a GUI app for creating symbolic links (symlinks), and it is based on the [`mklink`](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/mklink) command. You can create multiple symlinks at a time.
 
+## Download
+
+[![Download Latest Release](https://img.shields.io/badge/Download-Latest--Version-blue?style=for-the-badge&logo=github)](https://github.com/arnobpl/SymlinkCreator/releases/latest/download/Symlink.Creator.zip)
+
+📦 [Download Symlink.Creator.zip](https://github.com/arnobpl/SymlinkCreator/releases/latest/download/Symlink.Creator.zip)
+
+🗂️ [View all releases](https://github.com/arnobpl/SymlinkCreator/releases)
+
 ## Use cases
 - Suppose, you have a collection of several songs sorted by artists and albums on your PC. You might want a separate collection of your favorite songs which you will store on your mobile devices. In this scenario, the traditional shortcut option through the File Explorer right-click context menu is insufficient, because you cannot copy the actual file contents by copying the traditional shortcut files (*\*.lnk*). You might consider duplicating the files which you will store on your mobile devices. But it will waste the storage space of your PC. In this case, Symlink Creator will come in handy. You can easily create a separate collection of songs and transfer them to your mobile devices, without wasting your PC's storage space.
 
@@ -34,34 +42,42 @@ Symlink Creator creates *symlinks* which is an NTFS feature. Unlike the traditio
 ## Why Symlink Creator needs administrative rights
 It has been stated before that Symlink Creator uses the `mklink` command to create symlinks. The `mklink` command requires administrative privilege to create symlinks. You can find more information [here](https://learn.microsoft.com/en-us/windows/security/threat-protection/security-policy-settings/create-symbolic-links).
 
-## Donation
-If you enjoy using Symlink Creator and also want to buy me a cup of tea, you are most welcome. You can send me a gift here: [PayPal](https://paypal.me/arnobpl)
+## Support Symlink Creator
+Symlink Creator is a simple tool, but if it has saved you time or made things a bit easier, consider supporting the project. Every contribution helps keep it going and encourages future improvements.
 
-You can also send me crypto tokens to the following addresses:
+<a href='https://ko-fi.com/O4O01L2D7P' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+You can donate via [PayPal](https://paypal.me/arnobpl).
+
+<img src="SymlinkCreator/_ReadMe/qr-paypal.jpg" alt="PayPal QR Code" width="200">
+
+You can also send crypto tokens to the following addresses:
 
 <table>
-  <thead>
-    <tr>
-      <th>Blockchain</th>
-      <th>QR Code and Address</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Ethereum</td>
-      <td>
-        <img src="SymlinkCreator/_ReadMe/QR-Ethereum.png" alt="Ethereum QR Code" width="200"><br>
-        <code>0x2536B9A9a6b49234db2006482f43d02BEE6FDd07</code>
-      </td>
-    </tr>
-    <tr>
-      <td>Bitcoin</td>
-      <td>
-        <img src="SymlinkCreator/_ReadMe/QR-Bitcoin.png" alt="Bitcoin QR Code" width="200"><br>
-        <code>bc1qwhwqal63y629ltnyhvr0txl5xngnhh9dv9u5yf</code>
-      </td>
-    </tr>
-  </tbody>
+  <thead>
+    <tr>
+      <th>Blockchain</th>
+      <th>QR Code and Address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Ethereum</td>
+      <td>
+        <img src="SymlinkCreator/_ReadMe/QR-Ethereum.png" alt="Ethereum QR Code" width="200"><br>
+        <code>0x2536B9A9a6b49234db2006482f43d02BEE6FDd07</code>
+      </td>
+    </tr>
+    <tr>
+      <td>Bitcoin</td>
+      <td>
+        <img src="SymlinkCreator/_ReadMe/QR-Bitcoin.png" alt="Bitcoin QR Code" width="200"><br>
+        <code>bc1qwhwqal63y629ltnyhvr0txl5xngnhh9dv9u5yf</code>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
-Thank you for using Symlink Creator and sharing feedback. Happy Symlinking!
+If donating is not an option, simply starring the repo, sharing feedback, or spreading the word is equally appreciated. Thank you for using Symlink Creator and sharing your thoughts.
+
+Happy Symlinking!
