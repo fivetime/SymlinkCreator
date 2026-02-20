@@ -1,5 +1,6 @@
-﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using SymlinkCreator.core;
+using SymlinkCreator.i18n;
 using SymlinkCreator.ui.aboutWindow;
 using SymlinkCreator.ui.utility;
 using System;
@@ -29,13 +30,14 @@ namespace SymlinkCreator.ui.mainWindow
             InitializeComponent();
             this.Loaded += MainWindow_Loaded;
 
+            // 订阅语言切换事件，切换时重新刷新所有 UI 文本
+            LocalizationManager.LanguageChanged += (s, e) => RefreshUiText();
+
             if (IsRunningAsAdmin())
             {
                 MessageBox.Show(
-                    $"Running {this.Title} as an administrator may disable drag-n-drop functionality. " +
-                    "Only symlink creation requires administrative rights. " +
-                    "Please restart the application without administrative privileges to enable drag-n-drop functionality.",
-                    "Warning",
+                    LocalizationManager.Get("MsgWarningAdmin", this.Title),
+                    LocalizationManager.Get("MsgWarningAdminTitle"),
                     MessageBoxButton.OK,
                     MessageBoxImage.Warning);
             }
@@ -56,6 +58,7 @@ namespace SymlinkCreator.ui.mainWindow
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.DataContext = new MainWindowViewModel();
+            RefreshUiText();
         }
 
         protected override void OnSourceInitialized(EventArgs eventArgs)
@@ -68,7 +71,81 @@ namespace SymlinkCreator.ui.mainWindow
         #endregion
 
 
+        #region localization
+
+        // 简写辅助，减少代码量
+        private static string L(string key) => LocalizationManager.Get(key);
+
+        /// <summary>
+        /// 刷新窗口所有 UI 文字（语言切换后调用）。
+        /// </summary>
+        private void RefreshUiText()
+        {
+            // Labels
+            SourceListLabel.Text = L("SourceListLabel");
+            DestinationPathLabel.Text = L("DestinationPathLabel");
+
+            // Buttons
+            AddFilesButton.Content = L("AddFilesButton");
+            AddFilesButton.ToolTip = L("AddFilesButtonTooltip");
+            AddFoldersButton.Content = L("AddFoldersButton");
+            AddFoldersButton.ToolTip = L("AddFoldersButtonTooltip");
+            RemoveSelectedButton.Content = L("RemoveSelectedButton");
+            RemoveSelectedButton.ToolTip = L("RemoveSelectedButtonTooltip");
+            ClearListButton.Content = L("ClearListButton");
+            ClearListButton.ToolTip = L("ClearListButtonTooltip");
+            BrowseDestinationButton.Content = L("BrowseButton");
+            BrowseIconButton.Content = L("BrowseButton");
+            AboutButton.Content = L("AboutButton");
+            CreateSymlinksButtonText.Text = L("CreateSymlinksButton");
+
+            // CheckBoxes
+            UseRelativePathCheckbox.Content = L("UseRelativePathCheckbox");
+            UseRelativePathCheckbox.ToolTip = L("UseRelativePathTooltip");
+            RetainScriptCheckbox.Content = L("RetainScriptCheckbox");
+            RetainScriptCheckbox.ToolTip = L("RetainScriptTooltip");
+            HideSuccessDialogCheckbox.Content = L("HideSuccessDialogCheckbox");
+            HideSuccessDialogCheckbox.ToolTip = L("HideSuccessDialogTooltip");
+            PinToQuickAccessCheckbox.Content = L("PinToQuickAccessCheckbox");
+            PinToQuickAccessCheckbox.ToolTip = L("PinToQuickAccessTooltip");
+
+            // Custom name / icon labels
+            CustomNameLabel.Text = L("CustomNameLabel");
+            CustomNameTextBox.ToolTip = L("CustomNameTooltip");
+            CustomIconLabel.Text = L("CustomIconLabel");
+            CustomIconTextBox.ToolTip = L("CustomIconTooltip");
+
+            // Language selector label
+            LanguageSelectorLabel.Text = L("LanguageLabel");
+
+            // Language ComboBox items
+            RefreshLanguageComboBox();
+        }
+
+        private void RefreshLanguageComboBox()
+        {
+            string currentLang = LocalizationManager.CurrentLanguage;
+            LanguageComboBox.ItemsSource = LocalizationManager.SupportedLanguages
+                .Select(l => new LanguageItem { Code = l.Code, DisplayName = l.DisplayName })
+                .ToList();
+            LanguageComboBox.DisplayMemberPath = "DisplayName";
+            LanguageComboBox.SelectedItem = ((List<LanguageItem>)LanguageComboBox.ItemsSource)
+                .FirstOrDefault(l => l.Code == currentLang);
+        }
+
+        #endregion
+
+
         #region control event handles
+
+        private void LanguageComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (LanguageComboBox.SelectedItem is LanguageItem selected &&
+                selected.Code != LocalizationManager.CurrentLanguage)
+            {
+                LocalizationManager.ApplyLanguage(selected.Code);
+            }
+        }
 
         private void AddFilesButton_OnClick(object sender, RoutedEventArgs e)
         {
@@ -128,7 +205,6 @@ namespace SymlinkCreator.ui.mainWindow
         private void ClearListButton_OnClick(object sender, RoutedEventArgs e)
         {
             MainWindowViewModel mainWindowViewModel = this.DataContext as MainWindowViewModel;
-
             mainWindowViewModel?.FileOrFolderList.Clear();
         }
 
@@ -172,13 +248,13 @@ namespace SymlinkCreator.ui.mainWindow
 
             if (mainWindowViewModel.FileOrFolderList.Count == 0)
             {
-                MessageBox.Show(this, "No files or folders to create symlinks for.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, L("MsgNoSourceFiles"), L("MsgError"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
             if (string.IsNullOrWhiteSpace(mainWindowViewModel.DestinationPath))
             {
-                MessageBox.Show(this, "Destination path is empty.", "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, L("MsgDestinationEmpty"), L("MsgError"), MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
 
@@ -188,19 +264,22 @@ namespace SymlinkCreator.ui.mainWindow
                 mainWindowViewModel.FileOrFolderList,
                 mainWindowViewModel.DestinationPath,
                 mainWindowViewModel.ShouldUseRelativePath,
-                mainWindowViewModel.ShouldRetainScriptFile);
+                mainWindowViewModel.ShouldRetainScriptFile,
+                mainWindowViewModel.CustomSymlinkName,
+                mainWindowViewModel.CustomIconPath,
+                mainWindowViewModel.ShouldPinToQuickAccess);
 
             try
             {
                 symlinkAgent.CreateSymlinks();
                 if (!mainWindowViewModel.HideSuccessfulOperationDialog)
                 {
-                    MessageBox.Show(this, "Execution completed.", "Done!", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show(this, L("MsgSuccess"), L("MsgDone"), MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, "Error!", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(this, ex.Message, L("MsgError"), MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -208,6 +287,23 @@ namespace SymlinkCreator.ui.mainWindow
         {
             AboutWindow aboutWindow = new AboutWindow();
             aboutWindow.ShowDialog();
+        }
+
+        private void BrowseIconButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(this.DataContext is MainWindowViewModel mainWindowViewModel)) return;
+
+            OpenFileDialog iconDialog = new OpenFileDialog
+            {
+                Title = L("MsgSelectIconTitle"),
+                Filter = L("MsgIconFilter"),
+                Multiselect = false
+            };
+
+            if (iconDialog.ShowDialog() == true)
+            {
+                mainWindowViewModel.CustomIconPath = iconDialog.FileName;
+            }
         }
 
         #endregion
@@ -242,15 +338,14 @@ namespace SymlinkCreator.ui.mainWindow
         {
             return fileOrFolderListString
                 .Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)
-                .Select(path => SanitizePath(path)) // Sanitize each individual path
-                .Where(path => !string.IsNullOrWhiteSpace(path)) // Ensure no empty strings
+                .Select(path => SanitizePath(path))
+                .Where(path => !string.IsNullOrWhiteSpace(path))
                 .ToArray();
         }
 
         private string SanitizePath(string path)
         {
-            return path.Trim() // Trim any surrounding whitespace
-                       .Trim('"'); // Remove surrounding quotation marks if present
+            return path.Trim().Trim('"');
         }
 
         private void AddToSourceFileOrFolderList(IEnumerable<string> fileOrFolderList)
@@ -281,6 +376,17 @@ namespace SymlinkCreator.ui.mainWindow
                 WindowsPrincipal principal = new WindowsPrincipal(identity);
                 return principal.IsInRole(WindowsBuiltInRole.Administrator);
             }
+        }
+
+        #endregion
+
+
+        #region nested types
+
+        private class LanguageItem
+        {
+            public string Code { get; set; }
+            public string DisplayName { get; set; }
         }
 
         #endregion

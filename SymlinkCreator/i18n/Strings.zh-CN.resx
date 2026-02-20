@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- MainWindow labels -->
+  <data name="SourceListLabel" xml:space="preserve">
+    <value>源文件/文件夹列表：</value>
+  </data>
+  <data name="DestinationPathLabel" xml:space="preserve">
+    <value>目标路径：</value>
+  </data>
+  <data name="BrowseButton" xml:space="preserve">
+    <value>浏览</value>
+  </data>
+  <data name="AddFilesButton" xml:space="preserve">
+    <value>添加文件</value>
+  </data>
+  <data name="AddFilesButtonTooltip" xml:space="preserve">
+    <value>将文件添加到列表</value>
+  </data>
+  <data name="AddFoldersButton" xml:space="preserve">
+    <value>添加文件夹</value>
+  </data>
+  <data name="AddFoldersButtonTooltip" xml:space="preserve">
+    <value>将文件夹添加到列表</value>
+  </data>
+  <data name="RemoveSelectedButton" xml:space="preserve">
+    <value>移除选中</value>
+  </data>
+  <data name="RemoveSelectedButtonTooltip" xml:space="preserve">
+    <value>从列表中移除选中的项目</value>
+  </data>
+  <data name="ClearListButton" xml:space="preserve">
+    <value>清空列表</value>
+  </data>
+  <data name="ClearListButtonTooltip" xml:space="preserve">
+    <value>清除列表中的所有项目</value>
+  </data>
+  <data name="UseRelativePathCheckbox" xml:space="preserve">
+    <value>尽可能使用相对路径</value>
+  </data>
+  <data name="UseRelativePathTooltip" xml:space="preserve">
+    <value>勾选后，若源和目标在同一驱动器，则使用相对路径。</value>
+  </data>
+  <data name="RetainScriptCheckbox" xml:space="preserve">
+    <value>执行后保留脚本文件</value>
+  </data>
+  <data name="RetainScriptTooltip" xml:space="preserve">
+    <value>勾选后，创建符号链接后将脚本保存在应用程序所在位置。</value>
+  </data>
+  <data name="HideSuccessDialogCheckbox" xml:space="preserve">
+    <value>隐藏成功提示对话框</value>
+  </data>
+  <data name="HideSuccessDialogTooltip" xml:space="preserve">
+    <value>勾选后，仅在出现错误时显示对话框。</value>
+  </data>
+  <data name="CustomNameLabel" xml:space="preserve">
+    <value>自定义符号链接名称（仅单个源时有效）：</value>
+  </data>
+  <data name="CustomNameTooltip" xml:space="preserve">
+    <value>重命名符号链接及其在资源管理器中的显示名称。仅在选择单个源时有效。</value>
+  </data>
+  <data name="CustomNamePlaceholder" xml:space="preserve">
+    <value>留空则使用原始名称</value>
+  </data>
+  <data name="CustomIconLabel" xml:space="preserve">
+    <value>自定义图标（.ico）：</value>
+  </data>
+  <data name="CustomIconTooltip" xml:space="preserve">
+    <value>通过 desktop.ini 为源文件夹设置自定义图标。</value>
+  </data>
+  <data name="PinToQuickAccessCheckbox" xml:space="preserve">
+    <value>将符号链接固定到快速访问</value>
+  </data>
+  <data name="PinToQuickAccessTooltip" xml:space="preserve">
+    <value>创建符号链接后，自动将其固定到资源管理器快速访问侧边栏。</value>
+  </data>
+  <data name="CreateSymlinksButton" xml:space="preserve">
+    <value>创建符号链接</value>
+  </data>
+  <data name="AboutButton" xml:space="preserve">
+    <value>关于</value>
+  </data>
+
+  <!-- AboutWindow -->
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>关于</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>由 Arnob Paul 开发。感谢您使用本应用程序！:)</value>
+  </data>
+  <data name="AboutVisitWebsite" xml:space="preserve">
+    <value>访问开发者网站：</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>确定</value>
+  </data>
+
+  <!-- Language selector -->
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>语言：</value>
+  </data>
+
+  <!-- Messages -->
+  <data name="MsgNoSourceFiles" xml:space="preserve">
+    <value>没有可创建符号链接的文件或文件夹。</value>
+  </data>
+  <data name="MsgDestinationEmpty" xml:space="preserve">
+    <value>目标路径为空。</value>
+  </data>
+  <data name="MsgSuccess" xml:space="preserve">
+    <value>执行完成。</value>
+  </data>
+  <data name="MsgDone" xml:space="preserve">
+    <value>完成！</value>
+  </data>
+  <data name="MsgError" xml:space="preserve">
+    <value>错误！</value>
+  </data>
+  <data name="MsgWarningAdminTitle" xml:space="preserve">
+    <value>警告</value>
+  </data>
+  <data name="MsgWarningAdmin" xml:space="preserve">
+    <value>以管理员身份运行 {0} 可能会禁用拖放功能。只有创建符号链接需要管理员权限。请在没有管理员权限的情况下重新启动应用程序以启用拖放功能。</value>
+  </data>
+  <data name="MsgSelectIconTitle" xml:space="preserve">
+    <value>选择图标文件</value>
+  </data>
+  <data name="MsgIconFilter" xml:space="preserve">
+    <value>图标文件 (*.ico)|*.ico|所有文件 (*.*)|*.*</value>
+  </data>
+</root>

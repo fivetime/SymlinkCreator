@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+
+  <!-- MainWindow labels -->
+  <data name="SourceListLabel" xml:space="preserve">
+    <value>Source file or folder list:</value>
+  </data>
+  <data name="DestinationPathLabel" xml:space="preserve">
+    <value>Destination path:</value>
+  </data>
+  <data name="BrowseButton" xml:space="preserve">
+    <value>Browse</value>
+  </data>
+  <data name="AddFilesButton" xml:space="preserve">
+    <value>Add files</value>
+  </data>
+  <data name="AddFilesButtonTooltip" xml:space="preserve">
+    <value>Add files to the list</value>
+  </data>
+  <data name="AddFoldersButton" xml:space="preserve">
+    <value>Add folders</value>
+  </data>
+  <data name="AddFoldersButtonTooltip" xml:space="preserve">
+    <value>Add folders to the list</value>
+  </data>
+  <data name="RemoveSelectedButton" xml:space="preserve">
+    <value>Remove selected</value>
+  </data>
+  <data name="RemoveSelectedButtonTooltip" xml:space="preserve">
+    <value>Remove selected items from the list</value>
+  </data>
+  <data name="ClearListButton" xml:space="preserve">
+    <value>Clear list</value>
+  </data>
+  <data name="ClearListButtonTooltip" xml:space="preserve">
+    <value>Clear all items from the list</value>
+  </data>
+  <data name="UseRelativePathCheckbox" xml:space="preserve">
+    <value>Use relative path if possible</value>
+  </data>
+  <data name="UseRelativePathTooltip" xml:space="preserve">
+    <value>Check this to use a relative path if both source and destination are in the same drive.</value>
+  </data>
+  <data name="RetainScriptCheckbox" xml:space="preserve">
+    <value>Retain script file after execution</value>
+  </data>
+  <data name="RetainScriptTooltip" xml:space="preserve">
+    <value>Check this to save the script in the application's location after creating symlinks.</value>
+  </data>
+  <data name="HideSuccessDialogCheckbox" xml:space="preserve">
+    <value>Hide successful operation dialog</value>
+  </data>
+  <data name="HideSuccessDialogTooltip" xml:space="preserve">
+    <value>Check this to only show a dialog when an error occurs.</value>
+  </data>
+  <data name="CustomNameLabel" xml:space="preserve">
+    <value>Custom symlink name (single source only):</value>
+  </data>
+  <data name="CustomNameTooltip" xml:space="preserve">
+    <value>Rename the symlink and its display name in Explorer. Only works when one source is selected.</value>
+  </data>
+  <data name="CustomNamePlaceholder" xml:space="preserve">
+    <value>Leave empty to use the original name</value>
+  </data>
+  <data name="CustomIconLabel" xml:space="preserve">
+    <value>Custom icon (.ico):</value>
+  </data>
+  <data name="CustomIconTooltip" xml:space="preserve">
+    <value>Set a custom icon for the source folder via desktop.ini.</value>
+  </data>
+  <data name="PinToQuickAccessCheckbox" xml:space="preserve">
+    <value>Pin symlink(s) to Quick Access</value>
+  </data>
+  <data name="PinToQuickAccessTooltip" xml:space="preserve">
+    <value>After creating symlinks, automatically pin them to the Explorer Quick Access sidebar.</value>
+  </data>
+  <data name="CreateSymlinksButton" xml:space="preserve">
+    <value>Create symlinks</value>
+  </data>
+  <data name="AboutButton" xml:space="preserve">
+    <value>About</value>
+  </data>
+
+  <!-- AboutWindow -->
+  <data name="AboutWindowTitle" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="AboutDeveloper" xml:space="preserve">
+    <value>Developed by Arnob Paul. Thank you for using this application! :)</value>
+  </data>
+  <data name="AboutVisitWebsite" xml:space="preserve">
+    <value>Visit the developer's website:</value>
+  </data>
+  <data name="OkButton" xml:space="preserve">
+    <value>OK</value>
+  </data>
+
+  <!-- Language selector -->
+  <data name="LanguageLabel" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+
+  <!-- Messages -->
+  <data name="MsgNoSourceFiles" xml:space="preserve">
+    <value>No files or folders to create symlinks for.</value>
+  </data>
+  <data name="MsgDestinationEmpty" xml:space="preserve">
+    <value>Destination path is empty.</value>
+  </data>
+  <data name="MsgSuccess" xml:space="preserve">
+    <value>Execution completed.</value>
+  </data>
+  <data name="MsgDone" xml:space="preserve">
+    <value>Done!</value>
+  </data>
+  <data name="MsgError" xml:space="preserve">
+    <value>Error!</value>
+  </data>
+  <data name="MsgWarningAdminTitle" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="MsgWarningAdmin" xml:space="preserve">
+    <value>Running {0} as an administrator may disable drag-n-drop functionality. Only symlink creation requires administrative rights. Please restart the application without administrative privileges to enable drag-n-drop functionality.</value>
+  </data>
+  <data name="MsgSelectIconTitle" xml:space="preserve">
+    <value>Select Icon File</value>
+  </data>
+  <data name="MsgIconFilter" xml:space="preserve">
+    <value>Icon files (*.ico)|*.ico|All files (*.*)|*.*</value>
+  </data>
+</root>

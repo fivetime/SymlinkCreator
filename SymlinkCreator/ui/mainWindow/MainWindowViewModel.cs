@@ -28,6 +28,30 @@ namespace SymlinkCreator.ui.mainWindow
 
         public bool HideSuccessfulOperationDialog { get; set; } = false;
 
+        private string _customSymlinkName;
+        public string CustomSymlinkName
+        {
+            get { return _customSymlinkName; }
+            set
+            {
+                _customSymlinkName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _customIconPath;
+        public string CustomIconPath
+        {
+            get { return _customIconPath; }
+            set
+            {
+                _customIconPath = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShouldPinToQuickAccess { get; set; } = false;
+
         #endregion
 
 

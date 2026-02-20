@@ -1,0 +1,92 @@
+name: Build and Release
+
+# 触发条件：在 GitHub Actions 页面手动运行
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '版本号（如 1.3.1）'
+        required: true
+        default: '1.3.1'
+      release_notes:
+        description: '更新内容'
+        required: true
+        default: '无'
+
+jobs:
+  build-and-release:
+    runs-on: windows-latest  # WPF + .NET Framework 必须在 Windows 上编译
+
+    steps:
+      # 1. 拉取代码
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. 配置 MSBuild（.NET Framework 4.8 项目用 msbuild，不用 dotnet）
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      # 3. 还原 NuGet 包
+      - name: Restore NuGet packages
+        run: nuget restore SymlinkCreator/SymlinkCreator.sln
+
+      # 4. 将输入的版本号写入 AssemblyInfo.cs
+      - name: Sync version
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          $file = "SymlinkCreator/Properties/AssemblyInfo.cs"
+
+          (Get-Content $file) `
+            -replace 'AssemblyVersion\(".*?"\)', "AssemblyVersion(`"$version`")" `
+            -replace 'AssemblyFileVersion\(".*?"\)', "AssemblyFileVersion(`"$version`")" |
+            Set-Content $file
+
+          echo "Synced version to $version"
+        shell: pwsh
+
+      # 5. Release 模式编译
+      - name: Build
+        run: |
+          msbuild SymlinkCreator/SymlinkCreator.sln `
+            /p:Configuration=Release `
+            /p:Platform="Any CPU" `
+            /m
+
+      # 6. 打包输出文件为 zip（exe + config + zh-CN 卫星程序集）
+      - name: Package
+        run: |
+          $version = "${{ github.event.inputs.version }}"
+          $zipName = "Symlink.Creator.v$version.zip"
+          $outputDir = "SymlinkCreator/bin/Release"
+
+          $files = Get-ChildItem -Path $outputDir -File |
+            Where-Object { $_.Extension -in @('.exe', '.config') }
+
+          Compress-Archive -Path $files.FullName -DestinationPath $zipName
+
+          # 追加 zh-CN 卫星程序集
+          $zhDir = "$outputDir/zh-CN"
+          if (Test-Path $zhDir) {
+            Compress-Archive -Path $zhDir -Update -DestinationPath $zipName
+          }
+
+          echo "ZIP_NAME=$zipName" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      # 7. 创建 GitHub Release 并上传 zip
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v${{ github.event.inputs.version }}"
+          name: "Symlink Creator v${{ github.event.inputs.version }}"
+          body: |
+            ## 下载
+
+            请下载下方 Assets 中的 `Symlink.Creator.v${{ github.event.inputs.version }}.zip`，解压后直接运行 `Symlink Creator.exe`，无需安装。
+
+            ## 更新内容
+
+            ${{ github.event.inputs.release_notes }}
+          files: ${{ env.ZIP_NAME }}
+          draft: false
+          prerelease: false

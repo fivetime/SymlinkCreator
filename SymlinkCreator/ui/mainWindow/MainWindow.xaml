@@ -1,4 +1,4 @@
-﻿<Window x:Class="SymlinkCreator.ui.mainWindow.MainWindow"
+<Window x:Class="SymlinkCreator.ui.mainWindow.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,9 +9,9 @@
         mc:Ignorable="d"
         d:DataContext="{d:DesignData Type=local:MainWindowViewModel, IsDesignTimeCreatable=True}"
         MinWidth="600"
-        MinHeight="300"
+        MinHeight="420"
         Width="600"
-        Height="300">
+        Height="520">
     <Window.Title>
         <MultiBinding StringFormat="{}{0} v{1}">
             <Binding Source="{x:Static core:ApplicationConfiguration.ApplicationName}" />
@@ -46,108 +46,148 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+    <DockPanel>
+        <!-- 顶部语言选择栏 -->
+        <DockPanel DockPanel.Dock="Top" Margin="5,3,5,0" LastChildFill="False">
+            <TextBlock x:Name="LanguageSelectorLabel" DockPanel.Dock="Left"
+                       VerticalAlignment="Center" Margin="5,0,2,0" />
+            <ComboBox x:Name="LanguageComboBox" DockPanel.Dock="Left"
+                      Width="130" VerticalAlignment="Center"
+                      SelectionChanged="LanguageComboBox_SelectionChanged" />
+        </DockPanel>
 
-        <Grid Grid.Row="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+        <Separator DockPanel.Dock="Top" Margin="5,2,5,2" />
 
-            <TextBlock Grid.Row="0" Text="Source file or folder list:" />
+        <!-- 主内容区 -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <ListView Grid.Row="1" x:Name="SourceFileOrFolderListView" ItemsSource="{Binding FileOrFolderList}"
-                      AllowDrop="True" Drop="SourceFileOrFolderListView_OnDrop">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" ToolTip="{Binding}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <!-- 左侧：源文件列表 -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="2" LastChildFill="False">
-                <DockPanel.Resources>
-                    <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                        <Setter Property="MaxHeight" Value="{StaticResource DefaultMinButtonHeight}" />
-                    </Style>
-                </DockPanel.Resources>
+                <TextBlock x:Name="SourceListLabel" Grid.Row="0" />
 
-                <StackPanel DockPanel.Dock="Left">
-                    <Button Content="Add files" Click="AddFilesButton_OnClick" ToolTip="Add files to the list" />
-                    <Button Content="Add folders" Click="AddFoldersButton_OnClick" ToolTip="Add folders to the list" />
-                </StackPanel>
+                <ListView Grid.Row="1" x:Name="SourceFileOrFolderListView" ItemsSource="{Binding FileOrFolderList}"
+                          AllowDrop="True" Drop="SourceFileOrFolderListView_OnDrop">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" ToolTip="{Binding}" />
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
 
-                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
-                    <Button Content="Remove selected" Click="RemoveSelectedButton_OnClick" ToolTip="Remove selected items from the list" />
-                    <Button Content="Clear list" Click="ClearListButton_OnClick" ToolTip="Clear all items from the list" />
-                </StackPanel>
-            </DockPanel>
-        </Grid>
+                <DockPanel Grid.Row="2" LastChildFill="False">
+                    <DockPanel.Resources>
+                        <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="MaxHeight" Value="{StaticResource DefaultMinButtonHeight}" />
+                        </Style>
+                    </DockPanel.Resources>
 
-        <Rectangle Grid.Column="1"
-                   VerticalAlignment="Stretch"
-                   Width="0.5"
-                   Stroke="Black"
-                   Margin="{StaticResource DefaultMargin}" />
+                    <StackPanel DockPanel.Dock="Left">
+                        <Button x:Name="AddFilesButton" Click="AddFilesButton_OnClick" />
+                        <Button x:Name="AddFoldersButton" Click="AddFoldersButton_OnClick" />
+                    </StackPanel>
 
-        <Grid Grid.Column="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Destination path:" />
-
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-
-                <TextBox Grid.Column="0"
-                         Text="{Binding DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         ToolTip="{Binding DestinationPath}"
-                         AllowDrop="True" Drop="DestinationPathTextBox_OnDrop" PreviewDrop="DestinationPathTextBox_OnDrop"
-                         PreviewDragOver="DestinationPathTextBox_OnPreviewDragOver" />
-
-                <Button Grid.Column="1" Content="Browse" Click="DestinationPathBrowseButton_OnClick" />
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="RemoveSelectedButton" Click="RemoveSelectedButton_OnClick" />
+                        <Button x:Name="ClearListButton" Click="ClearListButton_OnClick" />
+                    </StackPanel>
+                </DockPanel>
             </Grid>
 
-            <Separator Grid.Row="2" Margin="{StaticResource DefaultMargin}" />
+            <!-- 分隔线 -->
+            <Rectangle Grid.Column="1"
+                       VerticalAlignment="Stretch"
+                       Width="0.5"
+                       Stroke="Black"
+                       Margin="{StaticResource DefaultMargin}" />
 
-            <StackPanel Grid.Row="3">
-                <CheckBox Content="Use relative path if possible"
-                          IsChecked="{Binding ShouldUseRelativePath}"
-                          ToolTip="Check this to use a relative path if both source and destination are in the same drive." />
-                <CheckBox Content="Retain script file after execution"
-                          IsChecked="{Binding ShouldRetainScriptFile}"
-                          ToolTip="Check this to save the script in the application's location after creating symlinks." />
-                <CheckBox Content="Hide successful operation dialog"
-                          IsChecked="{Binding HideSuccessfulOperationDialog}"
-                          ToolTip="Check this to only show a dialog when an error occurs." />
-            </StackPanel>
+            <!-- 右侧：目标路径和选项 -->
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-            <DockPanel Grid.Row="4" LastChildFill="False">
-                <Button DockPanel.Dock="Right" x:Name="CreateSymlinksButton" HorizontalAlignment="Right"
-                        Click="CreateSymlinksButton_OnClick">
-                    <StackPanel Orientation="Horizontal">
-                        <Image x:Name="CreateSymlinksButtonImage" Margin="{StaticResource DefaultMargin}" />
-                        <TextBlock Text="Create symlinks" />
-                    </StackPanel>
-                </Button>
+                <TextBlock x:Name="DestinationPathLabel" Grid.Row="0" />
 
-                <Button Content="About" MaxHeight="{StaticResource DefaultMinButtonHeight}"
-                        Click="AboutButton_OnClick" />
-            </DockPanel>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             Text="{Binding DestinationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             ToolTip="{Binding DestinationPath}"
+                             AllowDrop="True" Drop="DestinationPathTextBox_OnDrop" PreviewDrop="DestinationPathTextBox_OnDrop"
+                             PreviewDragOver="DestinationPathTextBox_OnPreviewDragOver" />
+
+                    <Button x:Name="BrowseDestinationButton" Grid.Column="1" Click="DestinationPathBrowseButton_OnClick" />
+                </Grid>
+
+                <Separator Grid.Row="2" Margin="{StaticResource DefaultMargin}" />
+
+                <StackPanel Grid.Row="3">
+                    <CheckBox x:Name="UseRelativePathCheckbox"
+                              IsChecked="{Binding ShouldUseRelativePath}" />
+                    <CheckBox x:Name="RetainScriptCheckbox"
+                              IsChecked="{Binding ShouldRetainScriptFile}" />
+                    <CheckBox x:Name="HideSuccessDialogCheckbox"
+                              IsChecked="{Binding HideSuccessfulOperationDialog}" />
+
+                    <Separator Margin="{StaticResource DefaultMargin}" />
+
+                    <!-- 自定义 Symlink 名称 -->
+                    <TextBlock x:Name="CustomNameLabel" />
+                    <TextBox x:Name="CustomNameTextBox"
+                             Text="{Binding CustomSymlinkName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <!-- 自定义图标 -->
+                    <TextBlock x:Name="CustomIconLabel" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="CustomIconTextBox" Grid.Column="0"
+                                 Text="{Binding CustomIconPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                 ToolTip="{Binding CustomIconPath}"
+                                 IsReadOnly="True" />
+                        <Button x:Name="BrowseIconButton" Grid.Column="1" Click="BrowseIconButton_OnClick" />
+                    </Grid>
+
+                    <!-- 固定到快速访问 -->
+                    <CheckBox x:Name="PinToQuickAccessCheckbox"
+                              IsChecked="{Binding ShouldPinToQuickAccess}" />
+                </StackPanel>
+
+                <DockPanel Grid.Row="4" LastChildFill="False">
+                    <Button x:Name="CreateSymlinksButton" DockPanel.Dock="Right" HorizontalAlignment="Right"
+                            Click="CreateSymlinksButton_OnClick">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <Image x:Name="CreateSymlinksButtonImage" Margin="{StaticResource DefaultMargin}"
+                                   VerticalAlignment="Center" />
+                            <TextBlock x:Name="CreateSymlinksButtonText" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+
+                    <Button x:Name="AboutButton" MaxHeight="{StaticResource DefaultMinButtonHeight}"
+                            Click="AboutButton_OnClick" />
+                </DockPanel>
+            </Grid>
         </Grid>
-    </Grid>
+    </DockPanel>
 </Window>

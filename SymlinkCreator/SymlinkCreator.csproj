@@ -226,6 +226,7 @@
     <Compile Include="core\ApplicationConfiguration.cs" />
     <Compile Include="core\ScriptExecutor.cs" />
     <Compile Include="core\SymlinkAgent.cs" />
+    <Compile Include="i18n\LocalizationManager.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="ui\aboutWindow\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -248,6 +249,13 @@
     <None Include="App.config" />
     <None Include="app.manifest" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="i18n\Strings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="i18n\Strings.zh-CN.resx" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\icons\MainIcon.ico" />
